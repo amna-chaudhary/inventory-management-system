@@ -85,5 +85,6 @@ This is an academic/practice project created to demonstrate understanding of MVC
 
 ## Author
 
-Amina Bibi
+Amina Bibi &
+
 Amna
