@@ -1,0 +1,169 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - Inventory Management System</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/site.css" rel="stylesheet" />
+
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Open Sans', sans-serif;
+            background-color: #F4F5F7;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            font-size: 14px;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: #3DCFD3;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 1000;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: black;
+            height: calc(100vh - 80px);
+            position: fixed;
+            top: 80px;
+            left: 0;
+            padding-top: 20px;
+            color: white;
+            overflow-y: auto;
+            text-align: center;
+        }
+
+            .sidebar a, .dropdown-btn {
+                display: flex;
+                align-items: center;
+                padding: 12px 20px;
+                text-decoration: none;
+                color: #3DCFD3;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
+                justify-content: space-between;
+            }
+
+                .sidebar a:hover, .dropdown-btn:hover {
+                    background-color: #bdb5b5;
+                    color: #fff;
+                }
+
+        .dropdown-content {
+            display: none;
+            flex-direction: column;
+            background-color: black;
+            width: 100%;
+            padding-left: 20px;
+        }
+
+            .dropdown-content a {
+                padding: 10px;
+                color: #3DCFD3;
+                text-decoration: none;
+                font-size: 14px;
+            }
+
+                .dropdown-content a:hover {
+                    background-color: #bdb5b5;
+                    color: white;
+                }
+
+        .content {
+            margin-left: 250px;
+            margin-top: 80px;
+            padding: 20px;
+            flex-grow: 1;
+            overflow-y: auto;
+            height: calc(100vh - 80px);
+            background: #c1baba;
+        }
+    </style>
+
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="header">
+        <h4 style="color:black">Inventory Management System</h4>
+    </div>
+
+    <nav class="sidebar">
+        <a href="@Url.Action("Index", "Dashboard")"><i class="fa fa-home"></i> Dashboard</a>
+
+        <div class="dropdown">
+            <div class="dropdown-btn"><i class="fa fa-box"></i> Products <i class="fa fa-caret-down"></i></div>
+            <div class="dropdown-content">
+                <a href="@Url.Action("Create", "Products")">Add Product</a>
+                <a href="@Url.Action("Index", "Products")">Product Detail</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <div class="dropdown-btn"><i class="fa fa-users"></i> Customers <i class="fa fa-caret-down"></i></div>
+            <div class="dropdown-content">
+                <a href="@Url.Action("Create", "Customer")">Add Customer</a>
+                <a href="@Url.Action("Index", "Customer")">Customer Detail</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <div class="dropdown-btn"><i class="fa fa-shopping-cart"></i> Sales <i class="fa fa-caret-down"></i></div>
+            <div class="dropdown-content">
+                <a href="@Url.Action("Create", "SalesOrder")">New Order</a>
+                <a href="@Url.Action("Index", "SalesOrder")">View Order</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <div class="dropdown-btn"><i class="fa fa-users"></i> Vendors <i class="fa fa-caret-down"></i></div>
+            <div class="dropdown-content">
+                <a href="@Url.Action("Create", "Vendor")">Add Vendor</a>
+                <a href="@Url.Action("Index", "Vendor")">Vendor Detail</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ✅ RenderBody correctly placed here -->
+    <div class="content">
+        @RenderBody()
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @RenderSection("Scripts", required: false)
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var dropdowns = document.querySelectorAll(".dropdown-btn");
+            dropdowns.forEach(function (dropdown) {
+                dropdown.addEventListener("click", function () {
+                    var content = this.nextElementSibling;
+                    content.style.display = (content.style.display === "block") ? "none" : "block";
+                });
+            });
+        });
+    </script>
+</body>
+</html>

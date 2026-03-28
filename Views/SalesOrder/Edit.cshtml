@@ -1,0 +1,92 @@
+﻿@model MVCPro.Models.SalesOrderViewModel
+
+@{
+    ViewBag.Title = "Edit Sales Order";
+}
+
+<h2>Edit Sales Order</h2>
+
+@using (Html.BeginForm("Edit", "SalesOrder", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SalesOrderNumber)
+        @Html.EditorFor(model => model.SalesOrderNumber, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.SalesOrderNumber)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CustomerName)
+        @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.CustomerName)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CustomerId, "Customer")
+        @Html.DropDownListFor(model => model.CustomerId, ViewBag.Customers as SelectList, "Select Customer", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.CustomerId)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ExpectedShipmentDate)
+        @Html.EditorFor(model => model.ExpectedShipmentDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+        @Html.ValidationMessageFor(model => model.ExpectedShipmentDate)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PaymentTerms)
+        @Html.EditorFor(model => model.PaymentTerms, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.PaymentTerms)
+    </div>
+
+    <div class="form-group">
+        <h3>Products</h3>
+
+        @for (int i = 0; i < Model.ProductIds.Count; i++)
+        {
+            <div class="product-row">
+                <div class="form-group">
+                    @Html.Label("Product " + (i + 1))
+                    @Html.DropDownListFor(m => m.ProductIds[i],
+                        new SelectList(ViewBag.Products, "Id", "ItemName", Model.ProductIds[i]),
+                        "Select Product",
+                        new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ProductIds[i])
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Quantity " + (i + 1))
+                    @Html.TextBoxFor(m => m.Quantities[i], new { @class = "form-control", type = "number" })
+                    @Html.ValidationMessageFor(m => m.Quantities[i])
+                </div>
+            </div>
+        }
+
+        <div class="form-group">
+            <button type="button" id="addProductRow" class="btn btn-info">Add Another Product</button>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TotalAmount, "Total Amount")
+        <p>@Model.TotalAmount</p>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#addProductRow").click(function () {
+                var newRow = $(".product-row:first").clone();
+                newRow.find("select").val(""); // Clear selected product
+                newRow.find("input[type='number']").val(""); // Clear quantity input
+                $(".product-row:last").after(newRow);
+            });
+        });
+    </script>
+}

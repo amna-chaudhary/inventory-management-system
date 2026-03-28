@@ -1,0 +1,22 @@
+﻿@model MVCPro.Models.SalesOrder
+
+@{
+    ViewBag.Title = "Sales Order Details";
+}
+
+<h2>Sales Order Details</h2>
+
+<table class="table">
+    <tr><th>Order No</th><td>@Model.SalesOrderNumber</td></tr>
+    <tr><th>Customer Name</th><td>@Model.CustomerName</td></tr>
+    <tr><th>Customer</th><td>@Model.CustomerTable?.DisplayName</td></tr>
+    <tr><th>Order Date</th><td>@Model.OrderDate.ToShortDateString()</td></tr>
+    <tr><th>Expected Shipment</th><td>@Model.ExpectedShipmentDate?.ToShortDateString()</td></tr>
+    <tr><th>Payment Terms</th><td>@Model.PaymentTerms</td></tr>
+    <tr><th>Total Amount</th><td>@Model.TotalAmount.ToString("C")</td></tr>
+</table>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+</p>

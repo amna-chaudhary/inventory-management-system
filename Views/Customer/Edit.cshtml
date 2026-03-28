@@ -1,0 +1,78 @@
+﻿@* Edit.cshtml *@
+@model MVCPro.Models.CustomerTable
+@{
+    ViewBag.Title = "Edit Customer";
+}
+
+<h2>Edit Customer</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CustomerType)
+        @Html.TextBoxFor(model => model.CustomerType, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Salutation)
+        @Html.TextBoxFor(model => model.Salutation, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.FirstName)
+        @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.LastName)
+        @Html.TextBoxFor(model => model.LastName, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.DisplayName)
+        @Html.TextBoxFor(model => model.DisplayName, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email)
+        @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Phone)
+        @Html.TextBoxFor(model => model.Phone, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.BillingCity)
+        @Html.TextBoxFor(model => model.BillingCity, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.BillingState)
+        @Html.TextBoxFor(model => model.BillingState, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.BillingCountry)
+        @Html.TextBoxFor(model => model.BillingCountry, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.BillingPostalCode)
+        @Html.TextBoxFor(model => model.BillingPostalCode, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ShippingCity)
+        @Html.TextBoxFor(model => model.ShippingCity, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ShippingState)
+        @Html.TextBoxFor(model => model.ShippingState, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ShippingCountry)
+        @Html.TextBoxFor(model => model.ShippingCountry, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ShippingPostalCode)
+        @Html.TextBoxFor(model => model.ShippingPostalCode, new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+}

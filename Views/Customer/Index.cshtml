@@ -1,0 +1,63 @@
+﻿@model IEnumerable<MVCPro.Models.CustomerTable>
+
+@{
+    ViewBag.Title = "Customers List";
+}
+
+<h2>Customers List</h2>
+
+<p>
+    <a href="@Url.Action("Create", "Customer")" class="btn btn-success">Create New Customer</a>
+</p>
+
+<table class="table table-bordered table-striped table-responsive">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Customer Type</th>
+            <th>Salutation</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Display Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Billing City</th>
+            <th>Billing State</th>
+            <th>Billing Country</th>
+            <th>Billing Postal Code</th>
+            <th>Shipping City</th>
+            <th>Shipping State</th>
+            <th>Shipping Country</th>
+            <th>Shipping Postal Code</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model)
+        {
+            <tr>
+                <td>@customer.Id</td>
+                <td>@customer.CustomerType</td>
+                <td>@customer.Salutation</td>
+                <td>@customer.FirstName</td>
+                <td>@customer.LastName</td>
+                <td>@customer.DisplayName</td>
+                <td style="word-wrap: break-word; max-width: 150px;">@customer.Email</td>
+                <td>@customer.Phone</td>
+                <td>@customer.BillingCity</td>
+                <td>@customer.BillingState</td>
+                <td>@customer.BillingCountry</td>
+                <td>@customer.BillingPostalCode</td>
+                <td>@customer.ShippingCity</td>
+                <td>@customer.ShippingState</td>
+                <td>@customer.ShippingCountry</td>
+                <td>@customer.ShippingPostalCode</td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = customer.Id }, new { @class = "btn btn-info btn-sm" }) |
+                    @Html.ActionLink("Edit", "Edit", new { id = customer.Id }, new { @class = "btn btn-primary btn-sm" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = customer.Id }, new { @class = "btn btn-danger btn-sm" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

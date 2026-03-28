@@ -1,0 +1,29 @@
+﻿@* Details.cshtml *@
+@model MVCPro.Models.CustomerTable
+@{
+    ViewBag.Title = "Customer Details";
+}
+
+<h2>Customer Details</h2>
+
+<table class="table">
+    <tr><th>ID</th><td>@Model.Id</td></tr>
+    <tr><th>Customer Type</th><td>@Model.CustomerType</td></tr>
+    <tr><th>Salutation</th><td>@Model.Salutation</td></tr>
+    <tr><th>First Name</th><td>@Model.FirstName</td></tr>
+    <tr><th>Last Name</th><td>@Model.LastName</td></tr>
+    <tr><th>Display Name</th><td>@Model.DisplayName</td></tr>
+    <tr><th>Email</th><td>@Model.Email</td></tr>
+    <tr><th>Phone</th><td>@Model.Phone</td></tr>
+    <tr><th>Billing City</th><td>@Model.BillingCity</td></tr>
+    <tr><th>Billing State</th><td>@Model.BillingState</td></tr>
+    <tr><th>Billing Country</th><td>@Model.BillingCountry</td></tr>
+    <tr><th>Billing Postal Code</th><td>@Model.BillingPostalCode</td></tr>
+    <tr><th>Shipping City</th><td>@Model.ShippingCity</td></tr>
+    <tr><th>Shipping State</th><td>@Model.ShippingState</td></tr>
+    <tr><th>Shipping Country</th><td>@Model.ShippingCountry</td></tr>
+    <tr><th>Shipping Postal Code</th><td>@Model.ShippingPostalCode</td></tr>
+</table>
+
+@Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+

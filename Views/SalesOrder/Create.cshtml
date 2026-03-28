@@ -1,0 +1,126 @@
+﻿@model MVCPro.Models.SalesOrderViewModel
+
+@{
+    ViewBag.Title = "Create Sales Order";
+}
+
+<h2>Create Sales Order</h2>
+
+@using (Html.BeginForm("Create", "SalesOrder", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.CustomerName)
+        @Html.TextBoxFor(m => m.CustomerName, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.SalesOrderNumber)
+        @Html.TextBoxFor(m => m.SalesOrderNumber, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ExpectedShipmentDate)
+        @Html.TextBoxFor(m => m.ExpectedShipmentDate, new { @class = "form-control", type = "date" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PaymentTerms)
+        @Html.TextBoxFor(m => m.PaymentTerms, new { @class = "form-control" })
+    </div>
+
+    <!-- Add Product Dropdown and Quantity Input -->
+    <div class="form-group">
+        <label>Products</label>
+        <select id="productSelect" class="form-control">
+            @foreach (var product in ViewBag.Products as List<MVCPro.Models.Product>)
+            {
+                <option value="@product.Id" data-price="@product.SellingPrice">@product.ItemName</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Quantity</label>
+        <input id="quantityInput" class="form-control" type="number" min="1" />
+    </div>
+
+    <div class="form-group">
+        <button type="button" id="addProduct" class="btn btn-primary">Add Product</button>
+    </div>
+
+    <h4>Added Products:</h4>
+    <table id="addedProducts" class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <!-- Hidden fields to submit selected product IDs and quantities -->
+    <div id="hiddenFieldsContainer"></div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Create Order</button>
+    </div>
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        let productIndex = 0;
+
+        $(document).ready(function () {
+            $("#addProduct").click(function () {
+                const productId = $("#productSelect").val();
+                const productName = $("#productSelect option:selected").text();
+                const price = parseFloat($("#productSelect option:selected").data("price"));
+                const quantity = parseInt($("#quantityInput").val());
+
+                if (!productId || !quantity || quantity <= 0) {
+                    alert("Please select a product and enter valid quantity.");
+                    return;
+                }
+
+                const total = (price * quantity).toFixed(2);
+
+                const row = `
+                        <tr>
+                            <td>${productName}</td>
+                            <td>${quantity}</td>
+                            <td>${price}</td>
+                            <td>${total}</td>
+                            <td><button type="button" class="btn btn-danger removeProduct">Remove</button></td>
+                        </tr>
+                    `;
+                $("#addedProducts tbody").append(row);
+
+                // Hidden inputs
+                $("#hiddenFieldsContainer").append(`
+                        <input type="hidden" name="ProductIds[${productIndex}]" value="${productId}" />
+                        <input type="hidden" name="Quantities[${productIndex}]" value="${quantity}" />
+                    `);
+
+                productIndex++;
+
+                // Clear inputs
+                $("#quantityInput").val("");
+            });
+
+            // Remove product from table and hidden fields
+            $(document).on("click", ".removeProduct", function () {
+                const rowIndex = $(this).closest("tr").index();
+                $(this).closest("tr").remove();
+                $("#hiddenFieldsContainer input").eq(rowIndex * 2).remove();     // ProductId
+                $("#hiddenFieldsContainer input").eq(rowIndex * 2).remove();     // Quantity
+                productIndex--;
+            });
+        });
+    </script>
+}
